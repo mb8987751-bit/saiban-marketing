@@ -321,7 +321,7 @@ footer{padding:40px 0 24px}
 .highlight-card .hl-icon{width:48px;height:48px;border-radius:50%;background:rgba(232,119,34,0.08);display:flex;align-items:center;justify-content:center;margin:0 auto 12px;color:var(--orange)}
 .highlight-card h4{font-size:1rem;color:var(--navy);margin-bottom:6px}
 .highlight-card p{font-size:0.82rem;color:var(--text-light);line-height:1.5}
-.project-video video{width:100%;max-height:500px;border-radius:8px;background:#000}
+.project-video video,.project-video-grid video{width:100%;max-height:400px;border-radius:8px;background:#000}
 .project-downloads{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
 .project-downloads a{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:4px;background:var(--card-bg);border:1px solid var(--border);color:var(--navy);font-size:0.85rem;font-weight:600;transition:all 0.3s}
 .project-downloads a:hover{background:var(--navy);color:var(--white);border-color:var(--navy)}
@@ -331,6 +331,7 @@ footer{padding:40px 0 24px}
 .project-gallery{grid-template-columns:repeat(2,1fr)}
 .project-detail-hero{padding:100px 0 60px}
 .highlights-grid{grid-template-columns:1fr 1fr}
+.project-video-grid{grid-template-columns:1fr!important}
 }
 @media(max-width:480px){
 .project-gallery{grid-template-columns:1fr 1fr}
@@ -998,7 +999,6 @@ footer{padding:40px 0 24px}
     <div class="divider center"></div>
   </div>
   <div class="project-gallery fade-up">
-    <img src="projects/sunset-square/images/hero.png" alt="Sunset Square - Pine Avenue">
     <img src="projects/sunset-square/images/view-1.jpeg" alt="Project View 1">
     <img src="projects/sunset-square/images/view-2.jpeg" alt="Project View 2">
     <img src="projects/sunset-square/images/view-3.jpeg" alt="Project View 3">
@@ -1023,10 +1023,18 @@ footer{padding:40px 0 24px}
     <h2 class="section-title">Take a Visual Tour</h2>
     <div class="divider center"></div>
   </div>
-  <div class="fade-up project-video" style="max-width:800px;margin:32px auto 0;">
-    <video controls playsinline style="width:100%;border-radius:8px;" poster="projects/sunset-square/images/hero.png">
+  <div class="fade-up project-video-grid" style="max-width:900px;margin:32px auto 0;display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+    <video controls playsinline style="width:100%;border-radius:8px;">
       <source src="projects/sunset-square/videos/clip-1.mp4" type="video/mp4">
+    </video>
+    <video controls playsinline style="width:100%;border-radius:8px;">
       <source src="projects/sunset-square/videos/clip-2.mp4" type="video/mp4">
+    </video>
+    <video controls playsinline style="width:100%;border-radius:8px;">
+      <source src="projects/sunset-square/videos/video-3.mp4" type="video/mp4">
+    </video>
+    <video controls playsinline style="width:100%;border-radius:8px;">
+      <source src="projects/sunset-square/videos/video-4.mp4" type="video/mp4">
     </video>
   </div>
 </div>
