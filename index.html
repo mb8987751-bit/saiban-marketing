@@ -232,11 +232,13 @@ footer .footer-contact a{display:flex;gap:8px;align-items:flex-start}
 @media(max-width:768px){
 .nav-links,.nav-cta{display:none}
 .hamburger{display:flex}
-.hero{min-height:480px;padding-top:72px;height:auto}
-.hero h1{font-size:1.8rem}
-.hero p{font-size:0.9rem;margin-bottom:28px}
-.hero-actions{flex-direction:column}
-.hero-actions .btn-primary,.hero-actions .btn-outline{width:100%;justify-content:center;text-align:center}
+.hero{min-height:100vh;padding-top:72px}
+.hero-content{text-align:center;max-width:100%}
+.hero-tag{font-size:0.65rem;margin-bottom:12px}
+.hero h1{font-size:2rem;line-height:1.2;margin-bottom:10px}
+.hero p{font-size:0.88rem;margin-bottom:24px;margin-left:auto;margin-right:auto}
+.hero-actions{flex-direction:column;align-items:center}
+.hero-actions .btn-primary,.hero-actions .btn-outline{width:100%;justify-content:center;text-align:center;padding:14px 24px;font-size:0.85rem}
 .stats-grid{grid-template-columns:repeat(2,1fr);gap:16px}
 .stat-number{font-size:2rem}
 .about-grid{grid-template-columns:1fr;gap:32px}
@@ -267,7 +269,8 @@ footer .footer-about{max-width:100%}
 .home-ceo-card img{width:110px!important;height:110px!important}
 }
 @media(max-width:480px){
-.hero h1{font-size:1.5rem}
+.hero{min-height:100vh}
+.hero h1{font-size:1.7rem}
 .hero .sub-headline{font-size:1rem}
 .stats-grid{grid-template-columns:repeat(2,1fr);gap:12px}
 .stat-number{font-size:1.7rem}
