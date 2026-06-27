@@ -338,6 +338,24 @@ footer{padding:40px 0 24px}
 .highlights-grid{grid-template-columns:1fr}
 }
 
+/* Lightbox */
+.lightbox{position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.92);display:none;align-items:center;justify-content:center;opacity:0;transition:opacity 0.3s}
+.lightbox.open{display:flex;opacity:1}
+.lightbox-img{max-width:90vw;max-height:88vh;object-fit:contain;border-radius:4px}
+.lightbox-close{position:absolute;top:20px;right:24px;background:none;border:none;color:#fff;font-size:2rem;cursor:pointer;width:44px;height:44px;display:flex;align-items:center;justify-content:center;opacity:0.7;transition:opacity 0.2s}
+.lightbox-close:hover{opacity:1}
+.lightbox-prev,.lightbox-next{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.08);border:none;color:#fff;font-size:1.5rem;cursor:pointer;width:48px;height:48px;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:background 0.2s;opacity:0.7}
+.lightbox-prev:hover,.lightbox-next:hover{background:rgba(255,255,255,0.2);opacity:1}
+.lightbox-prev{left:16px}
+.lightbox-next{right:16px}
+.lightbox-counter{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);color:rgba(255,255,255,0.6);font-size:0.85rem;font-weight:500}
+@media(max-width:768px){
+.lightbox-prev,.lightbox-next{width:40px;height:40px;font-size:1.2rem}
+.lightbox-prev{left:8px}
+.lightbox-next{right:8px}
+.lightbox-img{max-width:96vw;max-height:82vh}
+}
+
 /* WhatsApp share button */
 .btn-whatsapp-share{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;border-radius:4px;background:#25D366;color:var(--white);font-size:0.9rem;font-weight:600;border:none;cursor:pointer;transition:background 0.3s,transform 0.2s}
 .btn-whatsapp-share:hover{background:#1ebe5a;transform:translateY(-1px)}
@@ -1058,6 +1076,15 @@ footer{padding:40px 0 24px}
 
 </div><!-- /page-sunset-square -->
 
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lb-close">&times;</button>
+  <button class="lightbox-prev" id="lb-prev">&#10094;</button>
+  <button class="lightbox-next" id="lb-next">&#10095;</button>
+  <img class="lightbox-img" id="lb-img" src="" alt="">
+  <div class="lightbox-counter" id="lb-counter"></div>
+</div>
+
 <!-- WhatsApp Float -->
 <a href="https://wa.me/923249000900" target="_blank" class="whatsapp-float" aria-label="Chat on WhatsApp">
   <svg width="28" height="28" viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.5 2C6.253 2 2 6.253 2 11.5c0 1.938.568 3.745 1.544 5.264L2 22l5.396-1.516A9.437 9.437 0 0 0 11.5 21C16.747 21 21 16.747 21 11.5S16.747 2 11.5 2zm0 17.25a7.737 7.737 0 0 1-3.95-1.082l-.283-.168-2.937.825.838-2.874-.185-.295A7.717 7.717 0 0 1 3.75 11.5c0-4.273 3.477-7.75 7.75-7.75s7.75 3.477 7.75 7.75-3.477 7.75-7.75 7.75z"/></svg>
@@ -1186,6 +1213,62 @@ footer{padding:40px 0 24px}
   window.shareOnWhatsApp = function() {
     var text = 'Check out Sunset Square - Pine Avenue, a luxury pre-launch project by Saiban Marketing!\n\nHighlights:\n- Prime Location on Pine Avenue\n- Modern Lifestyle Amenities\n- Thoughtfully Designed Residences\n- Attractive Pre-Launch Pricing\n- High Investment Potential\n\nVisit: https://saibanmarketing.com/#sunset-square\n\nContact Saiban Marketing for details: https://wa.me/923249000900';
     window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank');
+  };
+
+  // Lightbox
+  var lb = document.getElementById('lightbox');
+  var lbImg = document.getElementById('lb-img');
+  var lbCounter = document.getElementById('lb-counter');
+  var lbClose = document.getElementById('lb-close');
+  var lbPrev = document.getElementById('lb-prev');
+  var lbNext = document.getElementById('lb-next');
+  var lbImages = [];
+  var lbIndex = 0;
+  function openLightbox(index) {
+    lbIndex = index;
+    lbImg.src = lbImages[lbIndex];
+    lbCounter.textContent = (lbIndex + 1) + ' / ' + lbImages.length;
+    lb.classList.add('open');
+  }
+  lbClose.addEventListener('click', function() { lb.classList.remove('open'); });
+  lbPrev.addEventListener('click', function() {
+    lbIndex = (lbIndex - 1 + lbImages.length) % lbImages.length;
+    lbImg.src = lbImages[lbIndex];
+    lbCounter.textContent = (lbIndex + 1) + ' / ' + lbImages.length;
+  });
+  lbNext.addEventListener('click', function() {
+    lbIndex = (lbIndex + 1) % lbImages.length;
+    lbImg.src = lbImages[lbIndex];
+    lbCounter.textContent = (lbIndex + 1) + ' / ' + lbImages.length;
+  });
+  document.addEventListener('keydown', function(e) {
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape') lb.classList.remove('open');
+    if (e.key === 'ArrowLeft') lbPrev.click();
+    if (e.key === 'ArrowRight') lbNext.click();
+  });
+  lb.addEventListener('click', function(e) {
+    if (e.target === lb) lb.classList.remove('open');
+  });
+  // Wire gallery images
+  function wireGallery() {
+    var gallery = document.querySelector('#page-sunset-square .project-gallery');
+    if (!gallery) return;
+    lbImages = [];
+    gallery.querySelectorAll('img').forEach(function(img) {
+      lbImages.push(img.getAttribute('src'));
+    });
+    gallery.querySelectorAll('img').forEach(function(img, i) {
+      img.style.cursor = 'pointer';
+      img.addEventListener('click', function() { openLightbox(i); });
+    });
+  }
+  wireGallery();
+  // Re-wire on page navigation
+  var origNavigate = window.navigate;
+  window.navigate = function(page) {
+    origNavigate(page);
+    if (page === 'sunset-square') setTimeout(wireGallery, 200);
   };
 
   // Init
